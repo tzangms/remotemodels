@@ -1,5 +1,7 @@
 # remotemodels
 
+[![Build Status](https://travis-ci.org/tzangms/remotemodels.png)](https://travis-ci.org/tzangms/remotemodels)
+
 Since `micromodels` is not active maintained, I fork it and tune for myself.
 
 A simple library for building model classes based on dictionaries of data.
