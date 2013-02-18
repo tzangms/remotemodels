@@ -132,6 +132,9 @@ class DateField(DateTimeField):
     """Field to represent a :mod:`datetime.date`"""
 
     def to_python(self):
+        if self.data is None:
+            return None
+
         # don't parse data that is already native
         if isinstance(self.data, datetime.date):
             return self.data
@@ -144,6 +147,9 @@ class TimeField(DateTimeField):
     """Field to represent a :mod:`datetime.time`"""
 
     def to_python(self):
+        if self.data is None:
+            return None
+
         # don't parse data that is already native
         if isinstance(self.data, datetime.datetime):
             return self.data
