@@ -1,5 +1,6 @@
 import datetime
 from dateutil.parser import parse
+import PySO8601
 
 
 class BaseField(object):
@@ -150,7 +151,7 @@ class TimeField(DateTimeField):
         if isinstance(self.data, datetime.datetime):
             return self.data
 
-        return parse(self.data).time()
+        return PySO8601.parse_time(self.data).time()
 
 
 class WrappedObjectField(BaseField):

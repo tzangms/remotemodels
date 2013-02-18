@@ -28,7 +28,7 @@ setup(
     author='Ming Hsien Tzang',
     author_email='tzangms@gmail.com',
     license='Public Domain',
-    install_requires=["python-dateutil==1.5"],
+    install_requires=["python-dateutil==1.5", "PySO8601"],
     classifiers = [
         'Programming Language :: Python',
         'Development Status :: 3 - Alpha',
