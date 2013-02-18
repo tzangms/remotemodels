@@ -30,7 +30,7 @@ class BaseField(object):
         '''Used to serialize forms back into JSON or other formats.
 
         This method is essentially the opposite of
-        :meth:`~micromodels.fields.BaseField.to_python`. A string, boolean,
+        :meth:`~remotemodels.fields.BaseField.to_python`. A string, boolean,
         number, dictionary, list, or tuple must be returned. Subclasses should
         override this method.
 
@@ -100,7 +100,7 @@ class DateTimeField(BaseField):
 
     The ``serial_format`` parameter is a strftime formatted string for
     serialization. If ``serial_format`` isn't specified, an ISO formatted string
-    will be returned by :meth:`~micromodels.DateTimeField.to_serial`.
+    will be returned by :meth:`~remotemodels.DateTimeField.to_serial`.
 
     """
     def __init__(self, format=None, serial_format=None, **kwargs):
@@ -182,12 +182,12 @@ class ModelField(WrappedObjectField):
     You could build the following classes
     (note that you have to define the inner nested models first)::
 
-        class MyNestedModel(micromodels.Model):
-            nested_item = micromodels.CharField()
+        class MyNestedModel(remotemodels.Model):
+            nested_item = remotemodels.CharField()
 
-        class MyMainModel(micromodels.Model):
-            first_item = micromodels.CharField()
-            second_item = micromodels.ModelField(MyNestedModel)
+        class MyMainModel(remotemodels.Model):
+            first_item = remotemodels.CharField()
+            second_item = remotemodels.ModelField(MyNestedModel)
 
     Then you can access the data as follows::
 
@@ -232,11 +232,11 @@ class ModelCollectionField(WrappedObjectField):
             ]
         }
 
-        class MyNestedModel(micromodels.Model):
-            value = micromodels.CharField()
+        class MyNestedModel(remotemodels.Model):
+            value = remotemodels.CharField()
 
-        class MyMainModel(micromodels.Model):
-            list = micromodels.ModelCollectionField(MyNestedModel)
+        class MyMainModel(remotemodels.Model):
+            list = remotemodels.ModelCollectionField(MyNestedModel)
 
         >>> m = MyMainModel(some_data)
         >>> len(m.list)
@@ -308,10 +308,10 @@ class FieldCollectionField(BaseField):
         f = FaultLine(data)
 
     Notice that source is passed to to the
-    :class:`~micromodels.FieldCollectionField`, not the
-    :class:`~micromodels.DateField`.
+    :class:`~remotemodels.FieldCollectionField`, not the
+    :class:`~remotemodels.DateField`.
 
-    Let's check out the resulting :class:`~micromodels.Model` instance with the
+    Let's check out the resulting :class:`~remotemodels.Model` instance with the
     REPL::
 
         >>> f.name

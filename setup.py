@@ -15,18 +15,18 @@ def get_long_description():
     return read_from(rel_file('README.md'))
 
 def get_version():
-    data = read_from(rel_file('micromodels', '__init__.py'))
+    data = read_from(rel_file('remotemodels', '__init__.py'))
     return re.search(r"__version__ = '([^']+)'", data).group(1)
 
 setup(
-    name='micromodels',
+    name='remotemodels',
     description='Declarative dictionary-based model classes for Python',
     long_description=get_long_description(),
     version=get_version(),
     packages=find_packages(),
-    url='https://github.com/j4mie/micromodels/',
-    author='Jamie Matthews',
-    author_email='jamie.matthews@gmail.com',
+    url='https://github.com/tzangms/remotemodels/',
+    author='Ming Hsien Tzang',
+    author_email='tzangms@gmail.com',
     license='Public Domain',
     install_requires=["PySO8601"],
     classifiers = [

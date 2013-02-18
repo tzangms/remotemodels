@@ -1,25 +1,24 @@
-# micromodels
+# remotemodels
 
-[![Build Status](https://secure.travis-ci.org/j4mie/micromodels.png)](http://travis-ci.org/j4mie/micromodels)
+Since `micromodels` is not active maintained, I fork it and tune for myself.
 
 A simple library for building model classes based on dictionaries of data.
 
 Perfect for (amongst other things) wrapping Python objects around JSON data returned from web-based APIs.
 
-**Authors**: Jamie Matthews (<https://github.com/j4mie>) and Eric Martin (<https://github.com/lightcatcher>).
 
 ## Installation
 
-    pip install micromodels
+    pip install remotemodels
 
 ## Really simple example
 
-    import micromodels
+    import remotemodels
 
-    class Author(micromodels.Model):
-        first_name = micromodels.CharField()
-        last_name = micromodels.CharField()
-        date_of_birth = micromodels.DateField(format="%Y-%m-%d")
+    class Author(remotemodels.Model):
+        first_name = remotemodels.CharField()
+        last_name = remotemodels.CharField()
+        date_of_birth = remotemodels.DateField(format="%Y-%m-%d")
 
         @property
         def full_name(self):
@@ -40,23 +39,23 @@ Perfect for (amongst other things) wrapping Python objects around JSON data retu
     import json
     from urllib2 import urlopen
 
-    import micromodels
+    import remotemodels
 
-    class TwitterUser(micromodels.Model):
-        id = micromodels.IntegerField()
-        screen_name = micromodels.CharField()
-        name = micromodels.CharField()
-        description = micromodels.CharField()
+    class TwitterUser(remotemodels.Model):
+        id = remotemodels.IntegerField()
+        screen_name = remotemodels.CharField()
+        name = remotemodels.CharField()
+        description = remotemodels.CharField()
 
         def get_profile_url(self):
             return 'http://twitter.com/%s' % self.screen_name
 
 
-    class Tweet(micromodels.Model):
-        id = micromodels.IntegerField()
-        text = micromodels.CharField()
-        created_at = micromodels.DateTimeField(format="%a %b %d %H:%M:%S +0000 %Y")
-        user = micromodels.ModelField(TwitterUser)
+    class Tweet(remotemodels.Model):
+        id = remotemodels.IntegerField()
+        text = remotemodels.CharField()
+        created_at = remotemodels.DateTimeField(format="%a %b %d %H:%M:%S +0000 %Y")
+        user = remotemodels.ModelField(TwitterUser)
 
 
     json_data = urlopen('http://api.twitter.com/1/statuses/show/20.json').read()
@@ -70,7 +69,7 @@ Perfect for (amongst other things) wrapping Python objects around JSON data retu
     #new fields can also be added to the model instance
     #a method needs to be used to do this to handle serialization
 
-    tweet.add_field('retweet_count', 44, micromodels.IntegerField())
+    tweet.add_field('retweet_count', 44, remotemodels.IntegerField())
     print tweet.retweet_count
 
     #the data can be cast to a dict (still containing time object)
@@ -93,8 +92,8 @@ The following optional argument is available for all field types.
 
 By default, a model class will look for a key in its source data with the same name as each of its fields. For example:
 
-    class ExampleModel(micromodels.Model):
-        myfield = micromodels.CharField()
+    class ExampleModel(remotemodels.Model):
+        myfield = remotemodels.CharField()
 
     >>> e = ExampleModel({'myfield': 'Some Value'})
     >>> e.myfield
@@ -102,9 +101,9 @@ By default, a model class will look for a key in its source data with the same n
 
 If you wish to change this, you can pass the 'source' argument to each field instance:
 
-    class ExampleModel(micromodels.Model):
-        myfield = micromodels.CharField()
-        anotherfield = micromodels.CharField(source='some_other_field')
+    class ExampleModel(remotemodels.Model):
+        myfield = remotemodels.CharField()
+        anotherfield = remotemodels.CharField(source='some_other_field')
 
     >>> e = ExampleModel({'myfield': 'Some Value', 'some_other_field': 'Another Value'})
     >>> e.anotherfield
@@ -136,13 +135,13 @@ Attempts to convert its supplied data to a boolean. If the data is a string, `"t
 
 Converts its supplied data to a Python `datetime.datetime` object as `ISO8601`. 
 
-    class MyModel(micromodels.Model):
-        created_at = micromodels.DateTimeField()
+    class MyModel(remotemodels.Model):
+        created_at = remotemodels.DateTimeField()
 
 An optional format may be provided. 
 
-    class MyModel(micromodels.Model):
-        created_at = micromodels.DateTimeField(format="%a %b %d %H:%M:%S +0000 %Y")
+    class MyModel(remotemodels.Model):
+        created_at = remotemodels.DateTimeField(format="%a %b %d %H:%M:%S +0000 %Y")
 
 See [the Python
 documentation](http://docs.python.org/library/datetime.html#strftime-strptime-behavior)
@@ -168,9 +167,9 @@ Use this field when your source data dictionary contains a list of items of the 
         'second_list': ['first_item', 'second_item', 'third_item'],
     }
 
-    class MyModel(micromodels.Model):
-        first_list = micromodels.FieldCollectionField(micromodels.IntegerField)
-        second_list = micromodels.FieldCollectionField(micromodels.CharField)
+    class MyModel(remotemodels.Model):
+        first_list = remotemodels.FieldCollectionField(remotemodels.IntegerField)
+        second_list = remotemodels.FieldCollectionField(remotemodels.CharField)
 
     >>> m = MyModel(some_data)
     >>> m.first_list
@@ -191,12 +190,12 @@ Use this field when you wish to nest one object inside another. It takes a singl
 
 You could build the following classes (note that you have to define the inner nested models first):
 
-    class MyNestedModel(micromodels.Model):
-        nested_item = micromodels.CharField()
+    class MyNestedModel(remotemodels.Model):
+        nested_item = remotemodels.CharField()
 
-    class MyMainModel(micromodels.Model):
-        first_item = micromodels.CharField()
-        second_item = micromodels.ModelField(MyNestedModel) # pass the class of the nested model
+    class MyMainModel(remotemodels.Model):
+        first_item = remotemodels.CharField()
+        second_item = remotemodels.ModelField(MyNestedModel) # pass the class of the nested model
 
 Then you can access the data as follows:
 
@@ -239,11 +238,11 @@ to. For example:
         ]
     }
 
-    class MyNestedModel(micromodels.Model):
-        value = micromodels.CharField()
+    class MyNestedModel(remotemodels.Model):
+        value = remotemodels.CharField()
 
-    class MyMainModel(micromodels.Model):
-        list = micromodels.ModelCollectionField(MyNestedModel)
+    class MyMainModel(remotemodels.Model):
+        list = remotemodels.ModelCollectionField(MyNestedModel)
 
     >>> m = MyMainModel(some_data)
     >>> len(m.list)

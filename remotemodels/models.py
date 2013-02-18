@@ -6,7 +6,7 @@ except ImportError:
 from .fields import BaseField
 
 class Model(object):
-    """The Model is the main component of micromodels. Model makes it trivial
+    """The Model is the main component of remotemodels. Model makes it trivial
     to parse data from many sources, including JSON APIs.
 
     You will probably want to initialize this class using the class methods
@@ -132,7 +132,7 @@ class Model(object):
 
     def to_json(self):
         '''Returns a representation of the model as a JSON string. This method
-        relies on the :meth:`~micromodels.Model.to_dict` method.
+        relies on the :meth:`~remotemodels.Model.to_dict` method.
 
         '''
         return json.dumps(self.to_dict(serial=True))
