@@ -1,5 +1,5 @@
 import datetime
-import PySO8601
+from dateutil.parser import parse
 
 
 class BaseField(object):
@@ -103,9 +103,8 @@ class DateTimeField(BaseField):
     will be returned by :meth:`~remotemodels.DateTimeField.to_serial`.
 
     """
-    def __init__(self, format=None, serial_format=None, **kwargs):
+    def __init__(self, serial_format=None, **kwargs):
         super(DateTimeField, self).__init__(**kwargs)
-        self.format = format
         self.serial_format = serial_format
 
     def to_python(self):
@@ -117,16 +116,14 @@ class DateTimeField(BaseField):
         # don't parse data that is already native
         if isinstance(self.data, datetime.datetime):
             return self.data
-        elif self.format is None:
-            # parse as iso8601
-            return PySO8601.parse(self.data)
-        else:
-            return datetime.datetime.strptime(self.data, self.format)
+
+        return parse(self.data)
 
     def to_serial(self, time_obj):
         if not self.serial_format:
             return time_obj.isoformat()
         return time_obj.strftime(self.serial_format)
+
 
 class DateField(DateTimeField):
     """Field to represent a :mod:`datetime.date`"""
@@ -138,10 +135,9 @@ class DateField(DateTimeField):
         # don't parse data that is already native
         if isinstance(self.data, datetime.date):
             return self.data
-        
-        dt = super(DateField, self).to_python()
-        return dt.date()
 
+        return parse(self.data).date()
+        
 
 class TimeField(DateTimeField):
     """Field to represent a :mod:`datetime.time`"""
@@ -153,11 +149,8 @@ class TimeField(DateTimeField):
         # don't parse data that is already native
         if isinstance(self.data, datetime.datetime):
             return self.data
-        elif self.format is None:
-            # parse as iso8601
-            return PySO8601.parse_time(self.data).time()
-        else:
-            return datetime.datetime.strptime(self.data, self.format).time()
+
+        return parse(self.data).time()
 
 
 class WrappedObjectField(BaseField):

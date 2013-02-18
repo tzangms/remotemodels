@@ -133,7 +133,7 @@ Attempts to convert its supplied data to a boolean. If the data is a string, `"t
 
 #### DateTimeField
 
-Converts its supplied data to a Python `datetime.datetime` object as `ISO8601`. 
+Converts its supplied data to a Python `datetime.datetime` object.
 
     class MyModel(remotemodels.Model):
         created_at = remotemodels.DateTimeField()
@@ -141,22 +141,16 @@ Converts its supplied data to a Python `datetime.datetime` object as `ISO8601`.
 An optional format may be provided. 
 
     class MyModel(remotemodels.Model):
-        created_at = remotemodels.DateTimeField(format="%a %b %d %H:%M:%S +0000 %Y")
+        created_at = remotemodels.DateTimeField()
 
-See [the Python
-documentation](http://docs.python.org/library/datetime.html#strftime-strptime-behavior)
-for details of the format string. For example:
 
 #### DateField
 
-Converts its supplied data to a Python `datetime.date` object as
-`ISO8601` or using an option `format` argument (see `DateTimeField`
-for details)
+Converts its supplied data to a Python `datetime.date` object.
 
 #### TimeField
 
-Converts its supplied data to a Python `datetime.time` object as
-`ISO8601` or using an option `format` argument (see `DateTimeField` for details).
+Converts its supplied data to a Python `datetime.time` object.
 
 #### FieldCollectionField
 
