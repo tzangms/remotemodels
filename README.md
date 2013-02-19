@@ -140,11 +140,6 @@ Converts its supplied data to a Python `datetime.datetime` object.
     class MyModel(remotemodels.Model):
         created_at = remotemodels.DateTimeField()
 
-An optional format may be provided. 
-
-    class MyModel(remotemodels.Model):
-        created_at = remotemodels.DateTimeField()
-
 
 #### DateField
 
